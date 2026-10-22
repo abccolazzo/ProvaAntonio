@@ -1,0 +1,169 @@
+<!-- ============================================================
+     MAPPA SCUOLE SERVITE · Colazzo Srl · prodottiscuole.it
+     Blocco da incollare nella pagina, dove deve comparire la mappa.
+     Richiede il file mappa-scuole.json: indicarne il percorso in data-src.
+     Usa le variabili colore del sito (--color-primary, --color-accent...)
+     e ha valori di riserva se la pagina non le definisce.
+     ============================================================ -->
+<section id="mappa-scuole" class="ms" data-src="/assets/mappa-scuole.json" aria-labelledby="ms-titolo">
+  <header class="ms-head">
+    <p class="ms-eyebrow">Colazzo Srl · Ordini MePA ed extra MePA dal 2020</p>
+    <h2 id="ms-titolo" class="ms-h">Scuole in <em data-ms="regioni">19</em> regioni hanno scelto le nostre targhe ed etichette</h2>
+    <p class="ms-lead">Ogni punto è un comune dove almeno un istituto ha ordinato targhe, etichette o materiali per la pubblicità PON, PNRR, POC e Coesione Italia. Tocca una regione o un punto per vedere i comuni.</p>
+    <div class="ms-figs">
+      <div><b data-ms="scuole">432</b><span>scuole servite</span></div>
+      <div><b data-ms="comuni">338</b><span>comuni</span></div>
+      <div><b data-ms="ordini">734</b><span>ordini evasi</span></div>
+      <div><b data-ms="regioni">19</b><span>regioni su 20</span></div>
+    </div>
+  </header>
+  <div class="ms-main">
+    <div class="ms-mapbox">
+      <svg class="ms-map" role="img" aria-label="Mappa d'Italia con i comuni delle scuole servite"></svg>
+      <div class="ms-legend" aria-hidden="true">Scuole per regione
+        <i style="background:var(--ms-c1)"></i><i style="background:var(--ms-c2)"></i><i style="background:var(--ms-c3)"></i><i style="background:var(--ms-c4)"></i><i style="background:var(--ms-c5)"></i> più scuole
+        &nbsp;·&nbsp; <span class="ms-ld"></span> comune servito (dimensione = n. scuole)</div>
+      <div class="ms-tip" hidden></div>
+    </div>
+    <aside class="ms-side">
+      <div class="ms-panel">
+        <h3 class="ms-ph">Per regione <small class="ms-hint">tocca per filtrare</small></h3>
+        <ul class="ms-bars"></ul>
+      </div>
+      <div class="ms-panel">
+        <h3 class="ms-ph"><span class="ms-lt">Cerca un comune</span> <small class="ms-lc"></small></h3>
+        <label for="ms-q" class="ms-note">Nome del comune o sigla della provincia</label>
+        <input id="ms-q" class="ms-q" type="search" placeholder="es. Lecce, Maglie, BA…" autocomplete="off">
+        <ul class="ms-list"></ul>
+      </div>
+    </aside>
+  </div>
+  <p class="ms-note">Dati ricavati dagli ordini MePA ed extra MePA di Colazzo Srl dal 2020 al 15 ottobre 2026. Il comune di ogni istituto viene dall'anagrafe scuole statali del Ministero dell'Istruzione e del Merito.</p>
+</section>
+
+<style>
+#mappa-scuole{
+  --ms-bg:var(--color-bg-alt,#f5f6f7); --ms-surface:var(--color-bg,#fff); --ms-ink:var(--color-text,#222);
+  --ms-muted:var(--color-text-muted,#666); --ms-line:var(--color-border,#e2e2e2);
+  --ms-primary:var(--color-primary,#0a8f5c); --ms-dot:var(--color-accent,#1c8fd6); --ms-hit:var(--color-danger,#e63946);
+  --ms-land:#e6e8ea; --ms-land-hi:#d3d7db; --ms-radius:var(--radius,8px);
+  --ms-c1:#eaf6f0; --ms-c2:#bfe3d2; --ms-c3:#7cc4a2; --ms-c4:#34a776; --ms-c5:#0a8f5c;
+  max-width:var(--maxw,1180px); margin:0 auto; padding:32px 16px 40px; display:grid; gap:28px;
+  color:var(--ms-ink); font-family:inherit; line-height:1.5; box-sizing:border-box;
+}
+#mappa-scuole *{box-sizing:border-box}
+#mappa-scuole .ms-eyebrow{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ms-muted);font-weight:600}
+#mappa-scuole .ms-h{font-weight:800;font-size:clamp(26px,4.2vw,44px);line-height:1.08;margin:8px 0 0;max-width:20ch;text-wrap:balance;letter-spacing:-.01em}
+#mappa-scuole .ms-h em{font-style:normal;color:var(--ms-primary)}
+#mappa-scuole .ms-lead{color:var(--ms-muted);max-width:62ch;margin:12px 0 0}
+#mappa-scuole .ms-figs{display:grid;grid-template-columns:repeat(4,max-content);gap:12px 36px;margin-top:20px}
+#mappa-scuole .ms-figs b{display:block;font-weight:700;color:var(--ms-primary);font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+#mappa-scuole .ms-figs span{font-size:13px;color:var(--ms-muted)}
+#mappa-scuole .ms-main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}
+#mappa-scuole .ms-mapbox{position:relative;background:var(--ms-surface);border:1px solid var(--ms-line);border-radius:var(--ms-radius);padding:12px}
+#mappa-scuole .ms-map{display:block;width:100%;height:auto;max-height:78vh}
+#mappa-scuole .ms-reg{stroke:var(--ms-surface);stroke-width:1.6;cursor:pointer;transition:opacity .2s}
+#mappa-scuole .ms-reg:hover{opacity:.8}
+#mappa-scuole .ms-reg.sel{stroke:var(--ms-ink);stroke-width:2.4}
+#mappa-scuole .ms-dot{fill:var(--ms-dot);stroke:var(--ms-surface);stroke-width:1.6;cursor:pointer}
+#mappa-scuole .ms-dot.dim{opacity:.18}
+#mappa-scuole .ms-dot.hit{fill:var(--ms-hit)}
+#mappa-scuole .ms-dot:focus-visible{outline:none;stroke:var(--ms-ink);stroke-width:2.5}
+#mappa-scuole .ms-legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ms-muted);margin-top:8px;flex-wrap:wrap}
+#mappa-scuole .ms-legend i{display:inline-block;width:18px;height:10px;border-radius:2px}
+#mappa-scuole .ms-ld{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--ms-dot)}
+#mappa-scuole .ms-tip{position:absolute;pointer-events:none;background:var(--ms-ink);color:#fff;padding:8px 10px;border-radius:8px;font-size:13px;max-width:240px;box-shadow:0 6px 20px rgba(0,0,0,.2);z-index:5}
+#mappa-scuole .ms-tip b{display:block;font-size:15px}
+#mappa-scuole .ms-side{display:grid;gap:16px;min-width:0}
+#mappa-scuole .ms-panel{background:var(--ms-surface);border:1px solid var(--ms-line);border-radius:var(--ms-radius);padding:16px 18px;min-width:0}
+#mappa-scuole .ms-ph{font-weight:700;font-size:18px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+#mappa-scuole .ms-ph small{font-size:12px;color:var(--ms-muted);font-weight:500}
+#mappa-scuole .ms-bars{display:grid;gap:5px;list-style:none;margin:0;padding:0}
+#mappa-scuole .ms-bars button{all:unset;cursor:pointer;display:grid;grid-template-columns:minmax(0,9.5em) 1fr 2.6em;gap:10px;align-items:center;font-size:13px;width:100%;padding:2px 4px;border-radius:6px;box-sizing:border-box}
+#mappa-scuole .ms-bars button:hover,#mappa-scuole .ms-bars button.sel{background:var(--ms-land)}
+#mappa-scuole .ms-bars button:focus-visible{outline:2px solid var(--ms-dot)}
+#mappa-scuole .ms-nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mappa-scuole .ms-tr{height:8px;background:var(--ms-land);border-radius:4px;overflow:hidden}
+#mappa-scuole .ms-tr i{display:block;height:100%;background:var(--ms-primary);border-radius:4px}
+#mappa-scuole .ms-n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+#mappa-scuole .ms-q{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--ms-line);border-radius:var(--ms-radius);background:var(--ms-bg);color:var(--ms-ink)}
+#mappa-scuole .ms-q:focus{outline:2px solid var(--ms-primary);outline-offset:1px}
+#mappa-scuole .ms-list{list-style:none;margin:10px 0 0;padding:0;max-height:320px;overflow:auto}
+#mappa-scuole .ms-list li{padding:7px 4px;border-bottom:1px solid var(--ms-line);font-size:13px;display:flex;justify-content:space-between;gap:12px;cursor:pointer}
+#mappa-scuole .ms-list li:hover{background:var(--ms-bg)}
+#mappa-scuole .ms-list li span{color:var(--ms-muted);white-space:nowrap}
+#mappa-scuole .ms-note{display:block;font-size:12px;color:var(--ms-muted);max-width:75ch;margin:0 0 6px}
+@media (max-width:820px){#mappa-scuole .ms-main{grid-template-columns:1fr}}
+@media (max-width:560px){#mappa-scuole .ms-figs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){#mappa-scuole *{transition:none!important}}
+</style>
+
+<script>
+(function(){
+  var root=document.getElementById('mappa-scuole'); if(!root) return;
+  function start(D){
+    var NS='http://www.w3.org/2000/svg', svg=root.querySelector('.ms-map');
+    svg.setAttribute('viewBox','0 0 '+D.mappa.larghezza+' '+D.mappa.altezza);
+    var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+    var plur=function(n){return n+(n===1?' scuola':' scuole');};
+    root.querySelectorAll('[data-ms]').forEach(function(el){var v=D.totali[el.dataset.ms];if(v!=null)el.textContent=v.toLocaleString('it-IT');});
+    var max=Math.max.apply(null,D.regioni.map(function(r){return r.scuole;}));
+    var shade=function(n){return n?'var(--ms-c'+Math.min(5,1+Math.floor(4*Math.sqrt(n/max)+1e-4))+')':'var(--ms-land)';};
+    var sel=null, gR=document.createElementNS(NS,'g'), gD=document.createElementNS(NS,'g'); svg.append(gR,gD);
+    var regEls={};
+    D.regioni.forEach(function(r){
+      var p=document.createElementNS(NS,'path'); p.setAttribute('d',r.path); p.setAttribute('class','ms-reg'); p.style.fill=shade(r.scuole);
+      var t=document.createElementNS(NS,'title'); t.textContent=r.nome+': '+plur(r.scuole); p.append(t);
+      p.addEventListener('click',function(){pick(sel===r.nome?null:r.nome);}); gR.append(p); regEls[r.nome]=p;
+    });
+    var tip=root.querySelector('.ms-tip'), box=root.querySelector('.ms-mapbox');
+    function show(c,el){var b=el.getBoundingClientRect(),bb=box.getBoundingClientRect();
+      tip.innerHTML='<b>'+esc(c.comune)+' ('+esc(c.provincia)+')</b>'+plur(c.scuole)+' · '+esc(c.regione);
+      tip.hidden=false; var x=b.left-bb.left+b.width/2+12, y=b.top-bb.top-8;
+      if(x+240>bb.width)x=Math.max(8,b.left-bb.left-242); tip.style.left=x+'px'; tip.style.top=y+'px';}
+    function hide(){tip.hidden=true;}
+    D.comuni.slice().sort(function(a,b){return b.scuole-a.scuole;}).forEach(function(c){
+      var el=document.createElementNS(NS,'circle'); el.setAttribute('cx',c.x); el.setAttribute('cy',c.y);
+      el.setAttribute('r',3.6+2.4*Math.sqrt(c.scuole-1)); el.setAttribute('class','ms-dot'); el.setAttribute('tabindex','0');
+      el.setAttribute('aria-label',c.comune+': '+plur(c.scuole));
+      el.addEventListener('mouseenter',function(){show(c,el);}); el.addEventListener('focus',function(){show(c,el);});
+      el.addEventListener('mouseleave',hide); el.addEventListener('blur',hide);
+      el.addEventListener('click',function(e){e.stopPropagation();show(c,el);});
+      c.el=el; gD.append(el);
+    });
+    var bars=root.querySelector('.ms-bars');
+    D.regioni.filter(function(r){return r.scuole;}).sort(function(a,b){return b.scuole-a.scuole;}).forEach(function(r){
+      var li=document.createElement('li'), b=document.createElement('button'); b.type='button'; b.dataset.r=r.nome;
+      b.innerHTML='<span class="ms-nm">'+esc(r.nome)+'</span><span class="ms-tr"><i style="width:'+(100*r.scuole/max)+'%"></i></span><span class="ms-n">'+r.scuole+'</span>';
+      b.addEventListener('click',function(){pick(sel===r.nome?null:r.nome);}); li.append(b); bars.append(li);
+    });
+    var L=root.querySelector('.ms-list'), q=root.querySelector('.ms-q');
+    function list(items,title){
+      root.querySelector('.ms-lt').textContent=title;
+      root.querySelector('.ms-lc').textContent=items.length?(items.length+(items.length===1?' comune':' comuni')):'';
+      items.sort(function(a,b){return a.comune.localeCompare(b.comune,'it');});
+      L.innerHTML=''; items.forEach(function(c){var li=document.createElement('li');
+        li.innerHTML='<b>'+esc(c.comune)+' ('+esc(c.provincia)+')</b><span>'+plur(c.scuole)+'</span>';
+        li.addEventListener('mouseenter',function(){show(c,c.el);}); li.addEventListener('mouseleave',hide); L.append(li);});
+    }
+    function pick(n){sel=n; q.value='';
+      Object.keys(regEls).forEach(function(k){regEls[k].classList.toggle('sel',k===n);});
+      bars.querySelectorAll('button').forEach(function(b){b.classList.toggle('sel',b.dataset.r===n);});
+      D.comuni.forEach(function(c){c.el.classList.remove('hit');c.el.classList.toggle('dim',!!n&&c.regione!==n);});
+      root.querySelector('.ms-hint').textContent=n?'tocca di nuovo per tutte':'tocca per filtrare';
+      if(n) list(D.comuni.filter(function(c){return c.regione===n;}),n); else list([],'Cerca un comune');
+    }
+    q.addEventListener('input',function(){var v=q.value.trim().toLowerCase();
+      D.comuni.forEach(function(c){c.el.classList.remove('hit');});
+      if(v.length<2){ if(sel)pick(sel); else list([],'Cerca un comune'); return; }
+      var items=D.comuni.filter(function(c){return c.comune.toLowerCase().indexOf(v)>-1||c.provincia.toLowerCase()===v;});
+      items.forEach(function(c){c.el.classList.add('hit');});
+      list(items,'Risultati per “'+q.value.trim()+'”');
+    });
+    svg.addEventListener('click',function(e){if(e.target===svg)pick(null);});
+  }
+  if(window.MAPPA_SCUOLE_DATI){ start(window.MAPPA_SCUOLE_DATI); return; }
+  fetch(root.dataset.src).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(start)
+    .catch(function(){root.querySelector('.ms-mapbox').insertAdjacentHTML('beforeend','<p class="ms-note">La mappa non si è caricata: controlla che il file mappa-scuole.json sia nel percorso indicato in data-src.</p>');});
+})();
+</script>
